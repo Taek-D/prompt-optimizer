@@ -1,0 +1,17 @@
+[
+    {
+        "id": "sample-1",
+        "title": "Meeting Summary",
+        "prompt": "Here are the notes from our meeting today. Please summarize them and list action items. [Paste notes here]"
+    },
+    {
+        "id": "sample-2",
+        "title": "Product Launch Email",
+        "prompt": "Write an email announcing our new product, the SuperWidget 3000, to our existing customers. It should be exciting but professional."
+    },
+    {
+        "id": "sample-3",
+        "title": "Code Refactor Request",
+        "prompt": "I have this messy Python script. Please refactor it to be cleaner and add comments. Also optimize for performance."
+    }
+]

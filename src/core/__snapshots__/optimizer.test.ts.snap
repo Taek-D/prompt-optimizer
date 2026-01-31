@@ -1,0 +1,124 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Optimizer Core Logic > Model & Output Type Combinations > should generate correct output for claude - email_reply 1`] = `
+"<task>Draft a reply to this email.
+
+Email Content:
+This is a test prompt context.
+
+Guidelines:
+- Tone: neutral
+- Length: medium
+If you do not have enough information to answer this request, explicitly state 'I do not have enough information'.</task>"
+`;
+
+exports[`Optimizer Core Logic > Model & Output Type Combinations > should generate correct output for claude - marketing_copy 1`] = `
+"<task>Create a marketing copy for the following product/service.
+
+Product Context:
+This is a test prompt context.
+
+Constraints:
+- Tone: neutral
+- Target Audience: General
+- Format: plain
+If you do not have enough information to answer this request, explicitly state 'I do not have enough information'.</task>"
+`;
+
+exports[`Optimizer Core Logic > Model & Output Type Combinations > should generate correct output for claude - summary 1`] = `
+"<task>Please summarize the following text.
+
+Context:
+This is a test prompt context.
+
+Requirements:
+- Length: medium
+- Tone: neutral
+- Format: plain
+If you do not have enough information to answer this request, explicitly state 'I do not have enough information'.
+Do not use conversational filler (e.g., 'Sure', 'Here is'). Go straight to the output.</task>"
+`;
+
+exports[`Optimizer Core Logic > Model & Output Type Combinations > should generate correct output for gemini - email_reply 1`] = `
+"Ensure the output is safe and helpful.
+
+Draft a reply to this email.
+
+Email Content:
+This is a test prompt context.
+
+Guidelines:
+- Tone: neutral
+- Length: medium
+If you do not have enough information to answer this request, explicitly state 'I do not have enough information'."
+`;
+
+exports[`Optimizer Core Logic > Model & Output Type Combinations > should generate correct output for gemini - marketing_copy 1`] = `
+"Ensure the output is safe and helpful.
+
+Create a marketing copy for the following product/service.
+
+Product Context:
+This is a test prompt context.
+
+Constraints:
+- Tone: neutral
+- Target Audience: General
+- Format: plain
+If you do not have enough information to answer this request, explicitly state 'I do not have enough information'."
+`;
+
+exports[`Optimizer Core Logic > Model & Output Type Combinations > should generate correct output for gemini - summary 1`] = `
+"Ensure the output is safe and helpful.
+
+Please summarize the following text.
+
+Context:
+This is a test prompt context.
+
+Requirements:
+- Length: medium
+- Tone: neutral
+- Format: plain
+If you do not have enough information to answer this request, explicitly state 'I do not have enough information'.
+Do not use conversational filler (e.g., 'Sure', 'Here is'). Go straight to the output."
+`;
+
+exports[`Optimizer Core Logic > Model & Output Type Combinations > should generate correct output for openai - email_reply 1`] = `
+"Draft a reply to this email.
+
+Email Content:
+This is a test prompt context.
+
+Guidelines:
+- Tone: neutral
+- Length: medium
+If you do not have enough information to answer this request, explicitly state 'I do not have enough information'."
+`;
+
+exports[`Optimizer Core Logic > Model & Output Type Combinations > should generate correct output for openai - marketing_copy 1`] = `
+"Create a marketing copy for the following product/service.
+
+Product Context:
+This is a test prompt context.
+
+Constraints:
+- Tone: neutral
+- Target Audience: General
+- Format: plain
+If you do not have enough information to answer this request, explicitly state 'I do not have enough information'."
+`;
+
+exports[`Optimizer Core Logic > Model & Output Type Combinations > should generate correct output for openai - summary 1`] = `
+"Please summarize the following text.
+
+Context:
+This is a test prompt context.
+
+Requirements:
+- Length: medium
+- Tone: neutral
+- Format: plain
+If you do not have enough information to answer this request, explicitly state 'I do not have enough information'.
+Do not use conversational filler (e.g., 'Sure', 'Here is'). Go straight to the output."
+`;

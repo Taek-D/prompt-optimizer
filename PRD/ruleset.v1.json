@@ -1,0 +1,140 @@
+{
+  "version": "1.0.0",
+  "defaults": {
+    "mode": "lite",
+    "tone": "neutral",
+    "length": "short",
+    "format": "markdown",
+    "safetyExit": true,
+    "selfCheck": true
+  },
+  "constants": {
+    "safety_exit_ko": "제공된 정보만으로 답할 수 없으면 반드시 \"정보 없음\"이라고 출력하라. 추측하지 마라.",
+    "no_fluff_ko": "\"물론입니다\", \"좋습니다\" 같은 불필요한 서두 없이 바로 본문을 시작하라."
+  },
+  "common": {
+    "tags": {
+      "structure": "#구조화",
+      "constraints": "#제약조건",
+      "format": "#출력형식",
+      "self_check": "#자기검토",
+      "safety_exit": "#안전출구",
+      "model_fit": "#모델맞춤"
+    },
+    "self_check_items_ko": [
+      "요구한 길이/문장 수를 지켰는가?",
+      "요구한 출력 형식을 지켰는가?",
+      "불필요한 서두를 제거했는가?",
+      "근거 없는 추측을 하지 않았는가?"
+    ],
+    "length_map_ko": {
+      "very_short": "2문장 이내",
+      "short": "3문장",
+      "medium": "5문장 또는 500자 내"
+    },
+    "tone_map_ko": {
+      "formal": "격식 있고 정중하게",
+      "neutral": "중립적이고 명확하게",
+      "friendly": "친근하고 간결하게",
+      "persuasive": "설득력 있고 행동을 유도하는 톤으로"
+    }
+  },
+  "outputTypes": {
+    "summary": {
+      "label": "요약",
+      "appliedTags": ["#구조화", "#제약조건", "#출력형식", "#자기검토", "#안전출구"],
+      "requiredFields": ["대상 독자", "핵심 포인트 수"],
+      "liteTemplate": {
+        "role_ko": "당신은 전문 요약가입니다.",
+        "task_ko": "아래 내용을 요약하라.",
+        "constraints_ko": [
+          "{{LENGTH}}로 작성하라.",
+          "{{TONE}}",
+          "핵심 포인트는 {{FIELD:핵심 포인트 수|3}}개로 제한하라.",
+          "{{NO_FLUFF}}",
+          "{{SAFETY_EXIT}}"
+        ],
+        "output_format_ko": "출력은 {{FORMAT}} 형식을 따르라.",
+        "input_block_ko": "요약할 내용:\n{{RAW_PROMPT}}"
+      },
+      "proAddons": {
+        "quality_bar_ko": [
+          "요약은 중복을 제거하고 핵심만 남겨라.",
+          "원문에 없는 사실을 추가하지 마라."
+        ]
+      }
+    },
+    "marketing_copy": {
+      "label": "마케팅 카피",
+      "appliedTags": ["#구조화", "#제약조건", "#출력형식", "#자기검토", "#안전출구"],
+      "requiredFields": ["제품/서비스", "타겟", "채널"],
+      "liteTemplate": {
+        "role_ko": "당신은 퍼포먼스 마케터이자 카피라이터입니다.",
+        "task_ko": "아래 정보를 바탕으로 마케팅 카피를 작성하라.",
+        "constraints_ko": [
+          "{{LENGTH}}로 작성하라.",
+          "{{TONE}}",
+          "채널: {{FIELD:채널|인스타그램}}에 맞는 문체로 작성하라.",
+          "타겟: {{FIELD:타겟|일반 사용자}}을(를) 고려하라.",
+          "제품/서비스: {{FIELD:제품/서비스|미기재}}의 가치 제안을 명확히 하라.",
+          "CTA(행동 유도 문구) 1개를 포함하라.",
+          "{{NO_FLUFF}}",
+          "{{SAFETY_EXIT}}"
+        ],
+        "output_format_ko": "출력은 다음 순서로 작성하라: (1) 헤드라인 1개 (2) 본문 2~4줄 (3) CTA 1줄",
+        "input_block_ko": "원본 요청:\n{{RAW_PROMPT}}"
+      },
+      "proAddons": {
+        "variants_ko": "서로 다른 버전 3개를 생성하라. 각 버전은 톤/표현이 겹치지 않게 하라."
+      }
+    },
+    "email_reply": {
+      "label": "이메일 답장",
+      "appliedTags": ["#구조화", "#제약조건", "#출력형식", "#자기검토", "#안전출구"],
+      "requiredFields": ["상황 요약", "내 입장/요청", "상대 정보(선택)"],
+      "liteTemplate": {
+        "role_ko": "당신은 비즈니스 커뮤니케이션 전문 비서입니다.",
+        "task_ko": "아래 상황을 읽고 이메일 답장을 작성하라.",
+        "constraints_ko": [
+          "{{LENGTH}}로 작성하라.",
+          "{{TONE}}",
+          "상대에게 필요한 다음 행동(일정/확인/자료 요청 등)을 1개 이상 명확히 포함하라.",
+          "불필요한 감탄/서두를 줄이고 핵심을 먼저 말하라.",
+          "{{NO_FLUFF}}",
+          "{{SAFETY_EXIT}}"
+        ],
+        "output_format_ko": "출력 형식:\n- 제목(Subject) 1줄\n- 본문(인사 1줄 + 핵심 3~6줄 + 마무리 1줄)\n- 서명(이름/직책 자리표시자)",
+        "input_block_ko": "상황/원본 요청:\n{{RAW_PROMPT}}"
+      },
+      "proAddons": {
+        "tone_options_ko": "가능하면 같은 내용으로 (A) 매우 정중 (B) 간결 실무형 2가지 버전을 제공하라."
+      }
+    }
+  },
+  "models": {
+    "openai": {
+      "label": "OpenAI (GPT)",
+      "renderStyle": "instruction_first",
+      "sectionOrder": ["instruction", "input", "constraints", "output_format", "self_check"]
+    },
+    "gemini": {
+      "label": "Google Gemini",
+      "renderStyle": "role_context_instruction",
+      "sectionOrder": ["role", "context", "instruction", "constraints", "output_format", "self_check"]
+    },
+    "claude": {
+      "label": "Anthropic Claude",
+      "renderStyle": "xml_tags",
+      "xmlTags": {
+        "role": "role",
+        "context": "context",
+        "task": "task",
+        "constraints": "constraints",
+        "output_format": "output_format",
+        "self_check": "self_check",
+        "input": "input"
+      },
+      "sectionOrder": ["role", "task", "constraints", "output_format", "self_check", "input"]
+    }
+  }
+}

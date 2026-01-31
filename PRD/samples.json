@@ -1,0 +1,53 @@
+{
+  "version": "1.0.0",
+  "samples": [
+    {
+      "id": "s1",
+      "outputType": "summary",
+      "title": "회의록 요약",
+      "prompt": "아래 회의 내용을 요약해줘:\n- 일정: 다음 주 화요일 10시\n- 이슈: 온보딩 이탈률 증가\n- 액션: 튜토리얼 개선, A/B 테스트"
+    },
+    {
+      "id": "s2",
+      "outputType": "summary",
+      "title": "기사 요약",
+      "prompt": "이 글 요약해줘. 핵심만:\n(여기에 기사 본문을 붙여넣을 예정)"
+    },
+    {
+      "id": "m1",
+      "outputType": "marketing_copy",
+      "title": "앱 런칭 카피",
+      "prompt": "새로 나온 가계부 앱을 홍보하는 문구 만들어줘."
+    },
+    {
+      "id": "m2",
+      "outputType": "marketing_copy",
+      "title": "이벤트 프로모션",
+      "prompt": "이번 주말 한정 할인 이벤트 카피를 써줘. 너무 과장되지 않게."
+    },
+    {
+      "id": "m3",
+      "outputType": "marketing_copy",
+      "title": "B2B SaaS 랜딩",
+      "prompt": "중소기업용 재고관리 SaaS 랜딩 페이지 카피 초안 필요해."
+    },
+    {
+      "id": "e1",
+      "outputType": "email_reply",
+      "title": "미팅 일정 조율",
+      "prompt": "상대가 다음 주에 미팅 가능하냐고 물어봤어. 나는 화/목 오후만 가능해. 정중하게 답장 써줘."
+    },
+    {
+      "id": "e2",
+      "outputType": "email_reply",
+      "title": "요청 거절",
+      "prompt": "상대가 급하게 기능 추가해달라고 하는데 이번 스프린트에는 어렵고 다음 달에 가능해. 최대한 부드럽게 답장 써줘."
+    },
+    {
+      "id": "e3",
+      "outputType": "email_reply",
+      "title": "견적 요청 회신",
+      "prompt": "견적 요청이 왔는데, 요구사항이 모호해서 범위를 확인해야 해. 필요한 질문 3개 포함해서 이메일 답장 써줘."
+    }
+  ]
+}
