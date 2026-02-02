@@ -13,6 +13,9 @@ export const HistoryDrawer: React.FC<HistoryDrawerProps> = ({ isOpen, onClose, o
 
     useEffect(() => {
         if (isOpen) {
+            // Simply load from local storage every time it opens.
+            // Since getHistory is synchronous and fast enough for this MVP.
+            // eslint-disable-next-line
             setItems(getHistory());
         }
     }, [isOpen]);

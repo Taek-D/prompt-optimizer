@@ -3,6 +3,7 @@ import { OptimizeResult, OptimizeDiff } from '@/core/types';
 import { DiffToggle } from './DiffToggle';
 import { CopyButton } from './CopyButton';
 import { DownloadButton } from './DownloadButton';
+import { trackEvent } from '@/core/analytics';
 
 interface BeforeAfterProps {
     rawPrompt: string;
@@ -25,24 +26,30 @@ export const BeforeAfter: React.FC<BeforeAfterProps> = ({ rawPrompt, result, dif
             const blocks = diff.addedBlocks.sort((a, b) => a.start - b.start);
 
             blocks.forEach((block, idx) => {
-                if (block.start > lastIdx) {
-                    elements.push(<span key={`std-${idx}`}>{text.slice(lastIdx, block.start)}</span>);
+                // Safety check for bounds
+                const safeStart = Math.min(Math.max(0, block.start), text.length);
+                const safeEnd = Math.min(Math.max(0, block.end), text.length);
+
+                if (safeStart > safeEnd) return; // Invalid block
+
+                if (safeStart > lastIdx) {
+                    elements.push(<span key={`std-${idx}`}>{text.slice(lastIdx, safeStart)}</span>);
                 }
                 elements.push(
                     <span key={`hl-${idx}`} className="bg-green-100 text-green-800">
-                        {text.slice(block.start, block.end)}
+                        {text.slice(safeStart, safeEnd)}
                     </span>
                 );
-                lastIdx = block.end;
+                lastIdx = safeEnd;
             });
 
             if (lastIdx < text.length) {
                 elements.push(<span key="tail">{text.slice(lastIdx)}</span>);
             }
 
-            return <pre className="whitespace-pre-wrap font-mono text-sm">{elements}</pre>;
+            return <pre data-testid="optimized-result-content" className="whitespace-pre-wrap font-mono text-sm">{elements}</pre>;
         } else {
-            return <pre className="whitespace-pre-wrap font-mono text-sm">{result.optimizedPrompt}</pre>;
+            return <pre data-testid="optimized-result-content" className="whitespace-pre-wrap font-mono text-sm">{result.optimizedPrompt}</pre>;
         }
     };
 
@@ -60,8 +67,12 @@ export const BeforeAfter: React.FC<BeforeAfterProps> = ({ rawPrompt, result, dif
 
                     <DiffToggle enabled={showDiff} onToggle={() => setShowDiff(!showDiff)} />
 
-                    <DownloadButton content={result.optimizedPrompt} />
-                    <CopyButton text={result.optimizedPrompt} />
+                    <DownloadButton content={result.optimizedPrompt} onDownload={() => {
+                        trackEvent('download_clicked');
+                    }} />
+                    <CopyButton text={result.optimizedPrompt} onCopy={() => {
+                        trackEvent('copy_after_clicked');
+                    }} />
                 </div>
             </div>
 

@@ -41,6 +41,30 @@ bun dev
 
 브라우저에서 [http://localhost:3000](http://localhost:3000)을 열어 결과를 확인하세요.
 
+### 빌드 및 배포
+
+프로덕션용 빌드를 생성하려면 다음 명령어를 실행합니다:
+
+```bash
+npm run build
+npm run start
+```
+
+### 테스트
+
+품질 보증을 위해 다음 테스트 명령어를 실행할 수 있습니다:
+
+```bash
+# 코드 스타일 검사
+npm run lint
+
+# 유닛 테스트 (Core Logic)
+npm test
+
+# E2E 테스트 (UI Interactions)
+npx playwright test
+```
+
 ## 📂 프로젝트 구조
 
 - `src/app`: Next.js 앱 라우터 페이지

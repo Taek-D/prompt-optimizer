@@ -1,9 +1,8 @@
-import { OptimizeInput, Ruleset } from '../types';
+import { OptimizeInput } from '../types';
 
 export const renderOpenAI = (
     input: OptimizeInput,
-    processedContent: string,
-    ruleset: Ruleset
+    processedContent: string
 ): string => {
     // OpenAI: Instruction first.
     // Our processedContent already contains the full template (Instruction + Context + Constraints).

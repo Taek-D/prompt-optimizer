@@ -1,35 +1,22 @@
 import { OptimizeDiff, AddedBlock } from './types';
 
 export const computeDiff = (before: string, after: string): OptimizeDiff => {
-    // Block Diff Goal: Highlight blocks (paragraphs/sections) in 'after' that are NOT in 'before'.
+    // For prompt optimization, "After" usually contains the whole "Before" (Context) wrapped in things.
+    // So we primarily want to highlight the *Structural Additions* (Rules).
 
-    // 1. Split into blocks (by double newline or just newline?)
-    // User requested "Empty line / Section" split.
-    const splitIntoBlocks = (text: string) => {
-        return text.split(/\n\s*\n/).map(b => b.trim()).filter(b => b.length > 0);
-    };
+    // For prompt optimization, "After" usually contains the whole "Before" (Context) wrapped in things.
+    // So we primarily want to highlight the *Structural Additions* (Rules).
 
-    const beforeBlocks = splitIntoBlocks(before);
-
-    // We need to map blocks back to the original text indices for highlighting.
-    // Let's iterate through the 'after' text and identify blocks.
+    // Naive approach: Find "after" parts that are NOT in "before".
+    // Actually, prompts are often rearranged.
+    // Let's just do a simple "diff-match-patch" style or just highlight new blocks.
+    // For MVP, we'll try to identify large contiguous blocks in 'after' that are missing from 'before'.
 
     const addedBlocks: AddedBlock[] = [];
-
-    // Regex to find blocks in 'after' (split by double newline)
-    const blockRegex = /([^\n]+(?:\n(?!\n)[^\n]+)*)/g;
-    // Matches non-empty lines, allowing single newlines within a block, but stops at double newline.
-    // Actually simplicity: just split by \n\n and find indices?
-
-    // Robust way:
-    let match;
-    const separator = /\n\s*\n/g;
-
     // Let's manually traverse 'after' to find blocks.
     // Or just simple line-by-line check if "Block Level" is too complex for 1 file?
     // "Block unit (blank line/section)" requested.
 
-    let currentPos = 0;
     // We'll normalize 'before' into a single string for containment check?
     // Or check against beforeBlocks.
 

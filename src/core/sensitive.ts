@@ -8,7 +8,7 @@ const PATTERNS = {
     email: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g,
     phone: /(01[016789]-?\d{3,4}-?\d{4})|(\d{2,3}-?\d{3,4}-?\d{4})/g,
     rrn: /\d{6}-?[1-4]\d{6}/g,
-    api_key: /(sk-[a-zA-Z0-9]{20,})|(AIzA[a-zA-Z0-9_-]{35})|([a-zA-Z0-9]{32,40})/g, // OpenAI, Google, Generic Hash
+    api_key: /(sk-[a-zA-Z0-9]{20,})|(AIzA[a-zA-Z0-9_-]{35})/g, // OpenAI, Google (Strict)
 };
 
 export const detectSensitiveData = (text: string): SensitiveMatch[] => {

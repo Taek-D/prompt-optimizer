@@ -5,17 +5,7 @@ import { renderGemini } from './renderers/gemini';
 import { estimateTokens, getContextLimit } from './tokenEstimate';
 import { detectSensitiveData } from './sensitive';
 
-// Template Engine
-const parseField = (tag: string, userFields: Record<string, string> = {}): string => {
-    // tag format: {{FIELD:key|default}}
-    const content = tag.replace('{{', '').replace('}}', '');
-    if (!content.startsWith('FIELD:')) return '';
 
-    const [_, rest] = content.split('FIELD:');
-    const [key, defaultValue] = rest.split('|');
-
-    return userFields[key] || defaultValue || '';
-};
 
 const processTemplate = (template: string, input: OptimizeInput): string => {
     let result = template;
@@ -50,7 +40,7 @@ const processTemplate = (template: string, input: OptimizeInput): string => {
 };
 
 export const optimize = (input: OptimizeInput, ruleset: Ruleset): OptimizeResult => {
-    const warnings = [];
+    const warnings: { type: string; message: string }[] = [];
 
     // 1. Validation
     if (!input.rawPrompt || input.rawPrompt.trim() === '') {
@@ -78,16 +68,16 @@ export const optimize = (input: OptimizeInput, ruleset: Ruleset): OptimizeResult
     }
 
     // Process Template
-    let processedContent = processTemplate(template, input);
+    const processedContent = processTemplate(template, input);
 
     // 4. Model Rendering
     let optimizedPrompt = '';
     switch (input.model) {
         case 'openai':
-            optimizedPrompt = renderOpenAI(input, processedContent, ruleset);
+            optimizedPrompt = renderOpenAI(input, processedContent);
             break;
         case 'claude':
-            optimizedPrompt = renderClaude(input, processedContent, ruleset);
+            optimizedPrompt = renderClaude(input, processedContent);
             break;
         case 'gemini':
             optimizedPrompt = renderGemini(input, processedContent, ruleset);

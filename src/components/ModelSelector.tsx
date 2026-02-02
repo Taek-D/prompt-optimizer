@@ -18,6 +18,7 @@ export const ModelSelector: React.FC<ModelSelectorProps> = ({ selectedModel, onS
             {models.map((m) => (
                 <button
                     key={m.id}
+                    data-testid={`model-selector-${m.id}`}
                     onClick={() => onSelect(m.id)}
                     className={`
             p-4 border rounded-lg text-left transition-all

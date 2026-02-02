@@ -49,14 +49,14 @@ describe('Optimizer Core Logic', () => {
         });
 
         it('should warn on high token count', () => {
-            const longText = "A".repeat(10000); // Should exceed 4096 * 0.8
+            const longText = "A".repeat(20000); // Should exceed 4096 * 0.8 ~ 3200 tokens. (20000/4 = 5000)
             const input = { ...baseInput, rawPrompt: longText };
             const result = optimize(input, currentRuleset);
-            expect(result.warnings).toEqual(
-                expect.arrayContaining([
-                    expect.objectContaining({ type: 'length' })
-                ])
-            );
+            // We expect length warning. Sensitive warning might also trigger if pattern matches? 
+            // 'A'.repeat(5000) shouldn't unleash sensitive.
+            // Let's debug why sensitive is there or just expect any warning.
+            const hasLengthWarning = result.warnings.some(w => w.type === 'length');
+            expect(hasLengthWarning).toBe(true);
         });
 
         it('should parse template fields', () => {

@@ -1,9 +1,8 @@
-import { OptimizeInput, Ruleset } from '../types';
+import { OptimizeInput } from '../types';
 
 export const renderClaude = (
     input: OptimizeInput,
-    processedContent: string,
-    ruleset: Ruleset
+    processedContent: string
 ): string => {
     // Claude: XML tags preference.
     // The 'processedContent' comes from the template, which might be generic text.
@@ -17,7 +16,7 @@ export const renderClaude = (
     // Strategy: Wrap the whole thing in <user_input> or just return as is?
     // Let's wrap the whole thing in <task> to be safe and structural.
 
-    const separator = '\n\n';
+
     const components = [];
 
     components.push("<task>");

@@ -46,7 +46,7 @@ export interface Ruleset {
   commonRules: string[];
   outputTemplates: Record<OutputType, string>;
   modelRenderers: Record<ModelType, ModelRendererConfig>;
-  modes: Record<OptimizeMode, any>;
+  modes: Record<OptimizeMode, unknown>;
 }
 
 export interface ModelRendererConfig {
