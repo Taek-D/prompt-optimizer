@@ -1,81 +1,83 @@
-# PromptOptimizer (프롬프트 최적화 프로젝트)
+# PromptOptimizer
 
-**PromptOptimizer**는 사용자가 입력한 프롬프트를 OpenAI(GPT), Claude, Gemini 등 각 LLM 모델이 선호하는 최적의 구조로 변환해주는 웹 도구입니다. 서버로 데이터를 전송하지 않아 프라이버시가 안전하며, 규칙 및 템플릿 기반으로 일관된 고품질 프롬프트를 생성합니다.
+**AI 프롬프트 최적화 도구 (PromptOptimizer)**
 
-> **현재 상태**: ✅ **MVP 개발 완료 (v1.0)** - 기본 최적화 기능, 결과 비교, 히스토리, 설정 기능 구현 완료.
-> **현재 상태**: ✅ **MVP 개발 완료 (v1.0)** - 기본 최적화 기능, 결과 비교, 히스토리, 설정 기능 구현 완료.
-> **현재 상태**: ✅ **MVP 개발 완료 (v1.0)** - 기본 최적화 기능, 결과 비교, 히스토리, 설정 기능 구현 완료.
-> **현재 상태**: ✅ **MVP 개발 완료 (v1.0)** - 기본 최적화 기능, 결과 비교, 히스토리, 설정 기능 구현 완료.
-> **최근 업데이트**: 테스트 스위트 구축 (Vitest 단위 테스트 + Playwright E2E 테스트). 코어 로직 스냅샷 검증 및 주요 UI 흐름(Diff/History) 자동화 테스트 적용.
+PromptOptimizer는 사용자의 단순한 프롬프트를 AI 모델(OpenAI, Claude, Gemini)이 가장 잘 이해할 수 있는 형태의 **구조화된 프롬프트로 변환해주는 도구**입니다.
+서버로 데이터를 전송하지 않고, **모든 작업이 브라우저 내부에서 수행(Client-side Only)**되므로 데이터 유출 걱정 없이 안전하게 사용할 수 있습니다.
 
+![License](https://img.shields.io/github/license/antigravity/prompt-optimizer)
+![Build Status](https://img.shields.io/github/actions/workflow/status/antigravity/prompt-optimizer/playwright.yml)
 
-## ✨ 주요 기능
+---
 
-- **모델별 최적화**: OpenAI(지시 우선), Claude(XML 태그), Gemini(역할/맥락 분리) 맞춤형 변환
-- **규칙/템플릿 기반**: 요약, 마케팅 카피, 이메일 답장 등 목적에 맞는 템플릿 자동 적용
-- **개인정보 보호**: 모든 로직이 브라우저에서 실행(Client-side)되며, 입력 데이터는 서버로 전송되지 않습니다.
-- **결과 비교 (Diff)**: 원본과 최적화된 프롬프트를 비교하여 변경된 부분을 하이라이트합니다.
-- **로컬 히스토리**: 최근 작업 내역을 브라우저에 저장하여 관리합니다.
+## ✨ Features (주요 기능)
 
-## 🛠 기술 스택
+-   **Multi-Model Support**: OpenAI (GPT), Claude, Gemini 각 모델에 특화된 최적화 규칙 적용
+-   **Structured Output**: XML 태그, Markdown, JSON 등 명확한 출력 형식 지정
+-   **Client-side Only**: 입력된 모든 데이터는 브라우저를 벗어나지 않음 (**No Server Data Transmission**)
+-   **Rule-based Engine**: LLM이 아닌, 검증된 프롬프트 엔지니어링 패턴(Rule-based)을 사용하여 즉각적이고 결정적인 결과 제공
+-   **Privacy Focused**: 별도 회원가입이나 API 키 필요 없음
 
-- **Framework**: [Next.js 14+](https://nextjs.org) (App Router)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **Style**: [Tailwind CSS](https://tailwindcss.com/)
-- **Deployment**: [Vercel](https://vercel.com) (Static Export)
-- **Data**: JSON 기반 규칙셋 (No Backend)
+## 🚀 How it works (작동 원리)
 
-## 🚀 시작하기
+이 프로젝트는 거대 언어 모델(LLM)을 사용하여 문장을 재작성하는 방식이 아닙니다.
+대신, **프롬프트 엔지니어링의 모범 사례(Best Practices)**를 기반으로 한 **템플릿 엔진**입니다.
 
-개발 서버를 실행하여 로컬에서 프로젝트를 확인할 수 있습니다.
+1.  사용자가 원본 프롬프트를 입력합니다.
+2.  선택한 AI 모델(Claude 등)에 맞춰 최적의 페르소나, 맥락(Context), 제약 조건(Constraints)을 자동으로 주입합니다.
+3.  구조화된 최종 프롬프트를 생성합니다.
+
+## 🛠 Usage (사용법)
+
+### 로컬 실행 (Development)
 
 ```bash
+# 1. 저장소 클론
+git clone https://github.com/YOUR_USERNAME/prompt-optimizer.git
+cd prompt-optimizer
+
+# 2. 의존성 설치
+npm install
+
+# 3. 개발 서버 실행
 npm run dev
-# 또는
-yarn dev
-# 또는
-pnpm dev
-# 또는
-bun dev
 ```
 
-브라우저에서 [http://localhost:3000](http://localhost:3000)을 열어 결과를 확인하세요.
+브라우저에서 `http://localhost:3000`으로 접속하세요.
 
-### 빌드 및 배포
-
-프로덕션용 빌드를 생성하려면 다음 명령어를 실행합니다:
+### 테스트 (Testing)
 
 ```bash
-npm run build
-npm run start
-```
-
-### 테스트
-
-품질 보증을 위해 다음 테스트 명령어를 실행할 수 있습니다:
-
-```bash
-# 코드 스타일 검사
-npm run lint
-
-# 유닛 테스트 (Core Logic)
-npm test
-
-# E2E 테스트 (UI Interactions)
+# E2E 테스트 실행 (Playwright)
 npx playwright test
 ```
 
-## 📂 프로젝트 구조
+## 🔒 Privacy & Security
 
-- `src/app`: Next.js 앱 라우터 페이지
-- `src/components`: UI 컴포넌트 (Editor, Options, Diff 등)
-- `src/core`: 핵심 로직 (Optimizer, Renderers, Tokenizer 등)
-- `src/data`: 변환 규칙(Ruleset) 및 샘플 데이터
+-   **No Backend**: 이 프로젝트는 Next.js의 Static Export 기능을 사용하며, 별도의 백엔드 API 서버가 없습니다.
+-   **Local Processing**: 입력한 텍스트, 설정값 등은 오직 사용자의 브라우저 메모리에서만 처리됩니다.
+-   **No Analytics**: 개인을 식별할 수 있는 정보는 수집하지 않습니다.
 
-## 📝 문서
+## 📦 Deployment (배포)
 
-- [ARCHITECTURE.md](./ARCHITECTURE.md): 시스템 아키텍처 및 컨벤션
-- [PRD](./PRD/PRD.md): 제품 요구사항 문서 (프롬프트 최적화/PRD/PRD.md)
+Vercel을 통한 배포를 권장합니다.
 
----
-이 프로젝트는 [Next.js](https://nextjs.org)를 기반으로 생성되었습니다.
+1.  GitHub 저장소를 Vercel에 연결합니다.
+2.  Framework Preset을 `Next.js`로 설정합니다.
+3.  Build Command: `next build` (또는 `npm run build`)
+4.  Output Directory: `out` (Static Export 설정 시)
+5.  Deploy를 클릭합니다.
+
+## 🤝 Contributing
+
+기여는 언제나 환영합니다! 자세한 내용은 [CONTRIBUTING.md](CONTRIBUTING.md)를 참고해주세요.
+
+1.  이 저장소를 Fork 합니다.
+2.  새로운 Feature 브랜치를 생성합니다 (`git checkout -b feature/AmazingFeature`).
+3.  변경 사항을 Commit 합니다 (`git commit -m 'Add some AmazingFeature'`).
+4.  Branch에 Push 합니다 (`git push origin feature/AmazingFeature`).
+5.  Pull Request를 생성합니다.
+
+## 📄 License
+
+이 프로젝트는 [MIT License](LICENSE)에 따라 배포됩니다.
