@@ -13,53 +13,67 @@ export const computeDiff = (before: string, after: string): OptimizeDiff => {
     // For MVP, we'll try to identify large contiguous blocks in 'after' that are missing from 'before'.
 
     const addedBlocks: AddedBlock[] = [];
-    // Let's manually traverse 'after' to find blocks.
-    // Or just simple line-by-line check if "Block Level" is too complex for 1 file?
-    // "Block unit (blank line/section)" requested.
+    const beforeLines = before.split('\n');
+    const afterLines = after.split('\n');
+    const beforeLen = beforeLines.length;
+    const afterLen = afterLines.length;
 
-    // We'll normalize 'before' into a single string for containment check?
-    // Or check against beforeBlocks.
+    const lcsTable: number[][] = Array.from({ length: beforeLen + 1 }, () =>
+        Array(afterLen + 1).fill(0)
+    );
 
-    // Let split 'after' by \n\n
-    const afterParts = after.split(/\n\s*\n/);
+    for (let i = beforeLen - 1; i >= 0; i -= 1) {
+        for (let j = afterLen - 1; j >= 0; j -= 1) {
+            if (beforeLines[i] === afterLines[j]) {
+                lcsTable[i][j] = lcsTable[i + 1][j + 1] + 1;
+            } else {
+                lcsTable[i][j] = Math.max(lcsTable[i + 1][j], lcsTable[i][j + 1]);
+            }
+        }
+    }
 
-    // We need correct indices.
-    let searchStart = 0;
+    const addedLineFlags = Array(afterLen).fill(false);
+    let i = 0;
+    let j = 0;
+    while (i < beforeLen && j < afterLen) {
+        if (beforeLines[i] === afterLines[j]) {
+            i += 1;
+            j += 1;
+        } else if (lcsTable[i + 1][j] >= lcsTable[i][j + 1]) {
+            i += 1;
+        } else {
+            addedLineFlags[j] = true;
+            j += 1;
+        }
+    }
+    while (j < afterLen) {
+        addedLineFlags[j] = true;
+        j += 1;
+    }
 
-    afterParts.forEach(part => {
-        const trimmedPart = part.trim();
-        if (!trimmedPart) {
-            // Just specific to separator, advance index
-            // How much did we advance?
-            // This is tricky with split. 
-            // Let's use regex matchAll if available or simple index search.
-            return;
+    let cursor = 0;
+    let blockStart: number | null = null;
+    for (let lineIndex = 0; lineIndex < afterLen; lineIndex += 1) {
+        const line = afterLines[lineIndex];
+        const lineLength = line.length;
+        if (addedLineFlags[lineIndex]) {
+            if (blockStart === null) {
+                blockStart = cursor;
+            }
+        } else if (blockStart !== null) {
+            addedBlocks.push({ start: blockStart, end: cursor - 1 });
+            blockStart = null;
         }
 
-        // Find this part in 'after' strictly
-        const partIdx = after.indexOf(part, searchStart);
-        if (partIdx === -1) return; // Should not happen
-
-        const partEnd = partIdx + part.length;
-
-        // CHECK: Is this block in 'before'?
-        // Heuristic: Is a significant portion of this block present in 'before'?
-        // Or strict equality? 
-        // "A ruleset template usually ADDS new instructions."
-        // So strict inequality is good.
-        // But 'context' block IS in before.
-
-        // Check if `trimmedPart` is approximately in `before`.
-        // Simplest: `before.includes(trimmedPart)`
-        if (!before.includes(trimmedPart)) {
-            addedBlocks.push({
-                start: partIdx,
-                end: partEnd
-            });
+        cursor += lineLength;
+        if (lineIndex < afterLen - 1) {
+            cursor += 1;
         }
+    }
 
-        searchStart = partEnd;
-    });
+    if (blockStart !== null) {
+        addedBlocks.push({ start: blockStart, end: cursor });
+    }
 
     return {
         before,

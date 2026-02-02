@@ -1,8 +1,9 @@
-import { OptimizeInput } from '../types';
+import { OptimizeInput, Ruleset } from '../types';
 
 export const renderClaude = (
     input: OptimizeInput,
-    processedContent: string
+    processedContent: string,
+    ruleset: Ruleset
 ): string => {
     // Claude: XML tags preference.
     // The 'processedContent' comes from the template, which might be generic text.
@@ -17,11 +18,19 @@ export const renderClaude = (
     // Let's wrap the whole thing in <task> to be safe and structural.
 
 
+    const config = ruleset.modelRenderers.claude;
     const components = [];
+    const content = config.separator
+        ? processedContent.split(/\n\s*\n/).join(config.separator)
+        : processedContent;
 
-    components.push("<task>");
-    components.push(processedContent);
-    components.push("</task>");
+    if (config.useXml) {
+        components.push("<task>");
+        components.push(content);
+        components.push("</task>");
+    } else {
+        components.push(content);
+    }
 
     // Explicit Output Format if JSON (XML is redundant if we assume text)
     if (input.format === 'json') {

@@ -27,6 +27,11 @@ const processTemplate = (template: string, input: OptimizeInput): string => {
     const noFluffText = "Do not use conversational filler (e.g., 'Sure', 'Here is'). Go straight to the output.";
     result = result.replace(/{{NO_FLUFF}}/g, noFluffText);
 
+    const selfCheckText = input.selfCheck
+        ? "Before finalizing, briefly verify the output meets the requirements and fix any issues."
+        : "";
+    result = result.replace(/{{SELF_CHECK}}/g, selfCheckText);
+
     // 3. Field Parsing {{FIELD:key|default}}
     // Regex to find all {{FIELD:...}} tags
     const fieldRegex = /{{FIELD:([^}|]+)(?:\|([^}]+))?}}/g;
@@ -70,20 +75,25 @@ export const optimize = (input: OptimizeInput, ruleset: Ruleset): OptimizeResult
     // Process Template
     const processedContent = processTemplate(template, input);
 
+    const commonRulesText = ruleset.commonRules?.length
+        ? `Common Rules:\n${ruleset.commonRules.map(rule => `- ${rule}`).join('\n')}`
+        : '';
+
     // 4. Model Rendering
     let optimizedPrompt = '';
+    const combinedContent = [commonRulesText, processedContent].filter(Boolean).join('\n\n');
     switch (input.model) {
         case 'openai':
-            optimizedPrompt = renderOpenAI(input, processedContent);
+            optimizedPrompt = renderOpenAI(input, combinedContent, ruleset);
             break;
         case 'claude':
-            optimizedPrompt = renderClaude(input, processedContent);
+            optimizedPrompt = renderClaude(input, combinedContent, ruleset);
             break;
         case 'gemini':
-            optimizedPrompt = renderGemini(input, processedContent, ruleset);
+            optimizedPrompt = renderGemini(input, combinedContent, ruleset);
             break;
         default:
-            optimizedPrompt = processedContent;
+            optimizedPrompt = combinedContent;
     }
 
     // 5. Token Estimation

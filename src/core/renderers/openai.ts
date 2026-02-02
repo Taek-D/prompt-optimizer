@@ -1,8 +1,9 @@
-import { OptimizeInput } from '../types';
+import { OptimizeInput, Ruleset } from '../types';
 
 export const renderOpenAI = (
     input: OptimizeInput,
-    processedContent: string
+    processedContent: string,
+    ruleset: Ruleset
 ): string => {
     // OpenAI: Instruction first.
     // Our processedContent already contains the full template (Instruction + Context + Constraints).
@@ -16,5 +17,10 @@ export const renderOpenAI = (
     // If we want to strictly follow "Instruction First", our ruleset template already puts instruction first.
     // So we just return it, maybe ensuring markdown format tag if missing.
 
-    return processedContent;
+    const config = ruleset.modelRenderers.openai;
+    if (!config.separator) {
+        return processedContent;
+    }
+
+    return processedContent.split(/\n\s*\n/).join(config.separator);
 };

@@ -9,11 +9,22 @@ interface OptionsPanelProps {
     mode: OptimizeMode;
     safetyExit: boolean;
     selfCheck: boolean;
+    targetAudience: string;
     onChange: (key: string, val: string | boolean | number) => void;
+    onFieldChange: (key: string, val: string) => void;
 }
 
 export const OptionsPanel: React.FC<OptionsPanelProps> = ({
-    outputType, tone, length, format, mode, safetyExit, selfCheck, onChange
+    outputType,
+    tone,
+    length,
+    format,
+    mode,
+    safetyExit,
+    selfCheck,
+    targetAudience,
+    onChange,
+    onFieldChange
 }) => {
     // 1. Presets Logic
     const applyPreset = (type: OutputType) => {
@@ -134,6 +145,21 @@ export const OptionsPanel: React.FC<OptionsPanelProps> = ({
                         <option value="persuasive">Persuasive (Sales)</option>
                     </select>
                 </div>
+
+                {outputType === 'marketing_copy' && (
+                    <div className="md:col-span-2">
+                        <label className="block text-xs font-semibold text-gray-700 mb-1">
+                            Target Audience
+                        </label>
+                        <input
+                            type="text"
+                            value={targetAudience}
+                            onChange={(e) => onFieldChange('target_audience', e.target.value)}
+                            placeholder="e.g., busy professionals, small business owners"
+                            className="w-full p-2.5 border border-gray-300 rounded bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm transition-shadow"
+                        />
+                    </div>
+                )}
             </div>
 
             {/* Pro Options */}

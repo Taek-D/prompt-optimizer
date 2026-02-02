@@ -5,9 +5,9 @@
     "Specify the persona/role clearly."
   ],
   "outputTemplates": {
-    "summary": "Please summarize the following text.\n\nContext:\n{{RAW_PROMPT}}\n\nRequirements:\n- Length: {{LENGTH}}\n- Tone: {{TONE}}\n- Format: {{FORMAT}}\n{{SAFETY_EXIT}}\n{{NO_FLUFF}}",
-    "marketing_copy": "Create a marketing copy for the following product/service.\n\nProduct Context:\n{{RAW_PROMPT}}\n\nConstraints:\n- Tone: {{TONE}}\n- Target Audience: {{FIELD:target_audience|General}}\n- Format: {{FORMAT}}\n{{SAFETY_EXIT}}",
-    "email_reply": "Draft a reply to this email.\n\nEmail Content:\n{{RAW_PROMPT}}\n\nGuidelines:\n- Tone: {{TONE}}\n- Length: {{LENGTH}}\n{{SAFETY_EXIT}}"
+    "summary": "Please summarize the following text.\n\nContext:\n{{RAW_PROMPT}}\n\nRequirements:\n- Length: {{LENGTH}}\n- Tone: {{TONE}}\n- Format: {{FORMAT}}\n{{SAFETY_EXIT}}\n{{NO_FLUFF}}\n{{SELF_CHECK}}",
+    "marketing_copy": "Create a marketing copy for the following product/service.\n\nProduct Context:\n{{RAW_PROMPT}}\n\nConstraints:\n- Tone: {{TONE}}\n- Target Audience: {{FIELD:target_audience|General}}\n- Format: {{FORMAT}}\n{{SAFETY_EXIT}}\n{{SELF_CHECK}}",
+    "email_reply": "Draft a reply to this email.\n\nEmail Content:\n{{RAW_PROMPT}}\n\nGuidelines:\n- Tone: {{TONE}}\n- Length: {{LENGTH}}\n{{SAFETY_EXIT}}\n{{SELF_CHECK}}"
   },
   "modelRenderers": {
     "openai": {
