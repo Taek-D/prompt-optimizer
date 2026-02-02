@@ -16,27 +16,29 @@ export const detectSensitiveData = (text: string): SensitiveMatch[] => {
 
     // Email
     let m;
+    PATTERNS.email.lastIndex = 0;
     while ((m = PATTERNS.email.exec(text)) !== null) {
         matches.push({ type: 'email', match: m[0], index: m.index });
     }
 
     // Phone
-    // Reset lastIndex for reusable regexes if needed (global)
-    // PATTERNS.phone.lastIndex = 0; // if reused instance
+    PATTERNS.phone.lastIndex = 0;
     while ((m = PATTERNS.phone.exec(text)) !== null) {
         matches.push({ type: 'phone', match: m[0], index: m.index });
     }
 
     // RRN
+    PATTERNS.rrn.lastIndex = 0;
     while ((m = PATTERNS.rrn.exec(text)) !== null) {
         matches.push({ type: 'rrn', match: m[0], index: m.index });
     }
 
     // API Key
+    PATTERNS.api_key.lastIndex = 0;
     while ((m = PATTERNS.api_key.exec(text)) !== null) {
         // Exclude common words false positives if needed, but for MVP strict
         if (m[0].length > 20) { // Simple filter
-            matches.push({ type: 'other', match: m[0], index: m.index }); // Type 'other' or add 'api_key' to type def
+            matches.push({ type: 'api_key', match: m[0], index: m.index });
         }
     }
 

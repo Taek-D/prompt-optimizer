@@ -8,7 +8,7 @@ export default function Home() {
             </div>
 
             <footer className="max-w-4xl mx-auto p-6 mt-8 text-center text-gray-400 text-xs">
-                <p>🔒 Privacy Notice: Your inputs are processed locally in your browser and are never sent to any server. We collect anonymous usage data (e.g. usage count) to improve the service.</p>
+                <p>🔒 Privacy Notice: Your inputs are processed locally in your browser and are never sent to any server. We do not collect analytics.</p>
                 <p className="mt-1">© 2026 Antigravity Project</p>
             </footer>
         </main>
