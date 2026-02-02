@@ -84,10 +84,10 @@ export const optimize = (input: OptimizeInput, ruleset: Ruleset): OptimizeResult
     const combinedContent = [commonRulesText, processedContent].filter(Boolean).join('\n\n');
     switch (input.model) {
         case 'openai':
-            optimizedPrompt = renderOpenAI(input, combinedContent);
+            optimizedPrompt = renderOpenAI(input, combinedContent, ruleset);
             break;
         case 'claude':
-            optimizedPrompt = renderClaude(input, combinedContent);
+            optimizedPrompt = renderClaude(input, combinedContent, ruleset);
             break;
         case 'gemini':
             optimizedPrompt = renderGemini(input, combinedContent, ruleset);

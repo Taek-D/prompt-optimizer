@@ -10,12 +10,15 @@ export const renderGemini = (
     const config = modelRenderers.gemini;
 
     const components = [];
+    const content = config.separator
+        ? processedContent.split(/\n\s*\n/).join(config.separator)
+        : processedContent;
 
     if (config.safetyPrefix) {
         components.push(config.safetyPrefix);
     }
 
-    components.push(processedContent);
+    components.push(content);
 
     return components.join('\n\n').trim();
 };

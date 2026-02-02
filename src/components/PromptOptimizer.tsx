@@ -29,6 +29,9 @@ export const PromptOptimizer = () => {
         format: 'plain',
         safetyExit: true,
         selfCheck: true,
+        userFields: {
+            target_audience: ''
+        }
     });
 
     const [result, setResult] = useState<OptimizeResult | null>(null);
@@ -64,6 +67,16 @@ export const PromptOptimizer = () => {
         setInput(prev => ({ ...prev, [key]: val }));
     };
 
+    const handleFieldChange = (key: string, val: string) => {
+        setInput(prev => ({
+            ...prev,
+            userFields: {
+                ...prev.userFields,
+                [key]: val
+            }
+        }));
+    };
+
     return (
         <>
             {/* Header with History Button */}
@@ -95,6 +108,8 @@ export const PromptOptimizer = () => {
                     <OptionsPanel
                         {...input}
                         onChange={handleChange}
+                        targetAudience={input.userFields?.target_audience ?? ''}
+                        onFieldChange={handleFieldChange}
                     />
                     <button
                         onClick={handleOptimize}
